@@ -1,6 +1,7 @@
 var http = require('http');
 var fs = require('fs');
 var request = require('request');
+var url = require('url');
 
 var server = http.createServer(function(req, res) {
   if (req.url === '/') {
@@ -26,6 +27,8 @@ var server = http.createServer(function(req, res) {
       res.end();
     });
   } else {
+    var query = url.parse(req.url);
+    console.log(query);
     res.end('Compare');
   }
 
