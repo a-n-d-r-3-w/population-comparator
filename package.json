@@ -1,0 +1,22 @@
+{
+  "name": "population-comparator",
+  "version": "0.0.1",
+  "description": "Compare populations between two countries",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewaliu/population-comparator.git"
+  },
+  "author": "Andrew Liu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrewaliu/population-comparator/issues"
+  },
+  "homepage": "https://github.com/andrewaliu/population-comparator#readme",
+  "dependencies": {
+    "request": "^2.69.0"
+  }
+}

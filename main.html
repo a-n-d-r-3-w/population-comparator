@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Population Comparator</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <style>
+  body {
+    text-align: center;
+    margin-top: 15em;
+  }
+  </style>
+</head>
+<body>
+  <div>
+    How does the age population compare between
+    <select id='select1'>{{options1}}</select>
+    and
+    <select id='select2'>{{options2}}</select>
+    ?
+  </div>
+  <br>
+  <div>
+    <button onclick='compare();'>Compare</button>
+  </div>
+
+  <script>
+  function compare() {
+    var select1 = document.getElementById('select1');
+    var country1 = select1.options[select1.selectedIndex].text;
+    console.log(country1);
+    var select2 = document.getElementById('select2');
+    var country2 = select2.options[select2.selectedIndex].text;
+    console.log(country2);
+    location += '/compare?country1=' + country1 + '&country2=' + country2;
+  }
+  </script>
+</body>
+</html>
