@@ -2,6 +2,7 @@ var http = require('http');
 var fs = require('fs');
 var request = require('request');
 var url = require('url');
+var querystring = require('querystring');
 
 var server = http.createServer(function(req, res) {
   if (req.url === '/') {
@@ -27,9 +28,11 @@ var server = http.createServer(function(req, res) {
       res.end();
     });
   } else {
-    var query = url.parse(req.url);
-    console.log(query);
-    res.end('Compare');
+    var parseQueryString = true;
+    var query = url.parse(req.url, parseQueryString).query;
+    var country1 = query.country1;
+    var country2 = query.country2;
+    res.end('Compare ' + country1 + ' with ' + country2 + '.');
   }
 
 }).listen(8080);
