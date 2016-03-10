@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
 <head>
   <meta charset="utf-8">
   <title>Comparison</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <style>
-  body {
+  td, th {
     text-align: center;
-    margin-top: 15em;
-  }
-  table {
-    margin: auto;
   }
   </style>
 </head>
 <body>
-  <table>
+  <table class='table table-striped'>
     <tr>
-      <td></td>
-      <td>Population in {{country1name}}</td>
-      <td>Population in {{country2name}}</td>
+      <th></th>
+      <th>Population in {{country1name}}</th>
+      <th>Population in {{country2name}}</th>
     </tr>
     {{populationData}}
   </table>
