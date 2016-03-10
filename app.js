@@ -45,7 +45,15 @@ var server = http.createServer(function(req, res) {
             }
             var country1Data = JSON.parse(body);
             res.write('\n============ ' + country1 + ' ============\n');
-            res.write(JSON.stringify(country1Data), null, ' ');
+            var total1 = 0;
+            for (var i = 0; i < country1Data.length; i++) {
+              var ageSpecificData = country1Data[i];
+              var age = ageSpecificData.age;
+              var population = ageSpecificData.total;
+              total1 += population;
+              res.write('Age ' + age + ': ' + population + '\n');
+            }
+            res.write('Total: ' + total1 + '\n');
 
             request('http://api.population.io:80/1.0/population/2016/' + country2 + '/',
               (error, response, body) => {
@@ -55,9 +63,16 @@ var server = http.createServer(function(req, res) {
                 }
                 var country2Data = JSON.parse(body);
                 res.write('\n============ ' + country2 + ' ============\n');
-                res.write(JSON.stringify(country2Data), null, ' ');
+                var total2 = 0;
+                for (var i = 0; i < country2Data.length; i++) {
+                  var ageSpecificData = country2Data[i];
+                  var age = ageSpecificData.age;
+                  var population = ageSpecificData.total;
+                  total2 += population;
+                  res.write('Age ' + age + ': ' + population + '\n');
+                }
+                res.write('Total: ' + total2 + '\n');
 
-                // Post data to view.html
                 res.end();
               }
             );
