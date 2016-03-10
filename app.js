@@ -43,17 +43,20 @@ var server = http.createServer(function(req, res) {
               console.error(error.message);
               res.end();
             }
-            var country1Data = JSON.parse(body);
-            res.write('\n============ ' + country1 + ' ============\n');
+
+
+
+            var country1data = JSON.parse(body);
+            var country1text = '============ ' + country1 + ' ============<br>';
             var total1 = 0;
-            for (var i = 0; i < country1Data.length; i++) {
-              var ageSpecificData = country1Data[i];
+            for (var i = 0; i < country1data.length; i++) {
+              var ageSpecificData = country1data[i];
               var age = ageSpecificData.age;
               var population = ageSpecificData.total;
               total1 += population;
-              res.write('Age ' + age + ': ' + population + '\n');
+              country1text += 'Age ' + age + ': ' + population + '<br>';
             }
-            res.write('Total: ' + total1 + '\n');
+            country1text += 'Total: ' + total1;
 
             request('http://api.population.io:80/1.0/population/2016/' + country2 + '/',
               (error, response, body) => {
@@ -61,17 +64,23 @@ var server = http.createServer(function(req, res) {
                   console.error(error.message);
                   res.end();
                 }
-                var country2Data = JSON.parse(body);
-                res.write('\n============ ' + country2 + ' ============\n');
+                var country2data = JSON.parse(body);
+                var country2text = '============ ' + country2 + ' ============<br>';
                 var total2 = 0;
-                for (var i = 0; i < country2Data.length; i++) {
-                  var ageSpecificData = country2Data[i];
+                for (var i = 0; i < country2data.length; i++) {
+                  var ageSpecificData = country2data[i];
                   var age = ageSpecificData.age;
                   var population = ageSpecificData.total;
                   total2 += population;
-                  res.write('Age ' + age + ': ' + population + '\n');
+                  country2text += 'Age ' + age + ': ' + population + '<br>';
                 }
-                res.write('Total: ' + total2 + '\n');
+                country2text += 'Total: ' + total2;
+
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                var html = fs.readFileSync('compare.html', 'utf-8');
+                html = html.replace('{{country1text}}', country1text);
+                html = html.replace('{{country2text}}', country2text);
+                res.write(html);
 
                 res.end();
               }
