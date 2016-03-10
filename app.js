@@ -47,7 +47,7 @@ var server = http.createServer(function(req, res) {
 
 
             var country1data = JSON.parse(body);
-            var country1text = '============ ' + country1 + ' ============<br>';
+            var country1text = '';
             var total1 = 0;
             for (var i = 0; i < country1data.length; i++) {
               var ageSpecificData = country1data[i];
@@ -65,7 +65,7 @@ var server = http.createServer(function(req, res) {
                   res.end();
                 }
                 var country2data = JSON.parse(body);
-                var country2text = '============ ' + country2 + ' ============<br>';
+                var country2text = '';
                 var total2 = 0;
                 for (var i = 0; i < country2data.length; i++) {
                   var ageSpecificData = country2data[i];
@@ -78,6 +78,10 @@ var server = http.createServer(function(req, res) {
 
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 var html = fs.readFileSync('compare.html', 'utf-8');
+
+                html = html.replace('{{country1name}}', country1);
+                html = html.replace('{{country2name}}', country2);
+
                 html = html.replace('{{country1text}}', country1text);
                 html = html.replace('{{country2text}}', country2text);
                 res.write(html);
