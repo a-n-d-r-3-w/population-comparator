@@ -94,9 +94,9 @@ var server = http.createServer(function(req, res) {
                 var maxAge = Math.max(maxAge1, maxAge2);
 
                 var populationData = '';
-                populationData += '<tr><td>Total</td><td>' + total1 + '</td><td>' + total2 + '</td></tr>';
+                populationData += '<tr><td>Total</td><td>' + commaSeparate(total1) + '</td><td>' + commaSeparate(total2) + '</td></tr>';
                 for (var age = minAge; age <= maxAge; age++) {
-                  populationData += '<tr><td>' + age + ' yo</td><td>' + myData1[age] + '</td><td>' + myData2[age] + '</td></tr>';
+                  populationData += '<tr><td>' + age + ' yo</td><td>' + commaSeparate(myData1[age]) + '</td><td>' + commaSeparate(myData2[age]) + '</td></tr>';
                 }
 
                 html = html.replace('{{populationData}}', populationData);
@@ -113,3 +113,7 @@ var server = http.createServer(function(req, res) {
   }
 
 }).listen(process.env.PORT || 5000);
+
+function commaSeparate(num) {
+  return Number(num).toLocaleString('en');
+}
