@@ -44,19 +44,21 @@ var server = http.createServer(function(req, res) {
               res.end();
             }
 
-
-
             var country1data = JSON.parse(body);
             var country1text = '';
             var total1 = 0;
+            var minAge1 = Infinity;
+            var maxAge1 = 0;
+            var myData1 = {};
             for (var i = 0; i < country1data.length; i++) {
               var ageSpecificData = country1data[i];
               var age = ageSpecificData.age;
+              minAge1 = Math.min(age, minAge1);
+              maxAge1 = Math.max(age, maxAge1);
               var population = ageSpecificData.total;
+              myData1[age] = population;
               total1 += population;
-              country1text += 'Age ' + age + ': ' + population + '<br>';
             }
-            country1text += 'Total: ' + total1;
 
             request('http://api.population.io:80/1.0/population/2016/' + country2 + '/',
               (error, response, body) => {
@@ -64,17 +66,22 @@ var server = http.createServer(function(req, res) {
                   console.error(error.message);
                   res.end();
                 }
+
                 var country2data = JSON.parse(body);
                 var country2text = '';
                 var total2 = 0;
+                var minAge2 = Infinity;
+                var maxAge2 = 0;
+                var myData2 = {};
                 for (var i = 0; i < country2data.length; i++) {
                   var ageSpecificData = country2data[i];
                   var age = ageSpecificData.age;
+                  minAge2 = Math.min(age, minAge2);
+                  maxAge2 = Math.max(age, maxAge2);
                   var population = ageSpecificData.total;
+                  myData2[age] = population;
                   total2 += population;
-                  country2text += 'Age ' + age + ': ' + population + '<br>';
                 }
-                country2text += 'Total: ' + total2;
 
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 var html = fs.readFileSync('compare.html', 'utf-8');
@@ -82,8 +89,18 @@ var server = http.createServer(function(req, res) {
                 html = html.replace('{{country1name}}', country1);
                 html = html.replace('{{country2name}}', country2);
 
-                html = html.replace('{{country1text}}', country1text);
-                html = html.replace('{{country2text}}', country2text);
+
+                var minAge = Math.min(minAge1, minAge2);
+                var maxAge = Math.max(maxAge1, maxAge2);
+
+                var populationData = '';
+                populationData += '<tr><td>Total</td><td>' + total1 + '</td><td>' + total2 + '</td></tr>';
+                for (var age = minAge; age <= maxAge; age++) {
+                  populationData += '<tr><td>' + age + ' yo</td><td>' + myData1[age] + '</td><td>' + myData2[age] + '</td></tr>';
+                }
+
+                html = html.replace('{{populationData}}', populationData);
+
                 res.write(html);
 
                 res.end();
