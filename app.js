@@ -58,11 +58,11 @@ var server = http.createServer((originalRequest, responseToOriginalRequest) => {
                 var populationData = '';
                 populationData += '<tr><td>Total</td><td>' +
                   commaSeparate(relevantInfo1.total) + '</td><td>' +
-                  commaSeparate(relevantInfo2.total) + '</td></tr>';
+                  commaSeparate(relevantInfo2.total) + '</td></tr>\n';
                 for (var age = minAge; age <= maxAge; age++) {
                   populationData += '<tr><td>' + age + ' yo</td><td>' +
                     commaSeparate(relevantInfo1.populationMap[age]) + '</td><td>' +
-                    commaSeparate(relevantInfo2.populationMap[age]) + '</td></tr>';
+                    commaSeparate(relevantInfo2.populationMap[age]) + '</td></tr>\n';
                 }
                 html = html.replace('{{populationData}}', populationData);
 
