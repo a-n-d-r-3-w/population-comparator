@@ -11,61 +11,48 @@
   </style>
 </head>
 <body>
+
   <div>
     How does the age population compare between
     <select id='select1'>{{options1}}</select>
     and
     <select id='select2'>{{options2}}</select>
-    ?
+    in 2016?
   </div>
   <br>
   <div>
     <button onclick='compare();'>Compare</button>
   </div>
 
-
   <script>
+
   function compare() {
     var select1 = document.getElementById('select1');
     var country1 = select1.options[select1.selectedIndex].text;
-    console.log(country1);
     var select2 = document.getElementById('select2');
     var country2 = select2.options[select2.selectedIndex].text;
-    console.log(country2);
-
     post('/', {'country1': country1, 'country2': country2}, 'POST');
-
-    // var formData = new FormData();
-    // formData.append('country1', country1);
-    // formData.append('country2', country2);
-    // var request = new XMLHttpRequest();
-    // request.open('POST', '/');
-    // request.send(formData);
   }
 
+  // This function is copied from the answer to https://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
   function post(path, params, method) {
-    method = method || "post"; // Set method to post by default if not specified.
-
-    // The rest of this code assumes you are not using a library.
-    // It can be made less wordy if you use one.
+    method = method || "post";
     var form = document.createElement("form");
     form.setAttribute("method", method);
     form.setAttribute("action", path);
-
     for(var key in params) {
         if(params.hasOwnProperty(key)) {
             var hiddenField = document.createElement("input");
             hiddenField.setAttribute("type", "hidden");
             hiddenField.setAttribute("name", key);
             hiddenField.setAttribute("value", params[key]);
-
             form.appendChild(hiddenField);
          }
     }
-
     document.body.appendChild(form);
     form.submit();
   }
+
   </script>
 </body>
 </html>
